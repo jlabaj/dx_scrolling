@@ -11,119 +11,113 @@
 > -->
 <section class="body-container">
   <section class="body-blocks flex-column">
-<section class="body-block block-filled">
-  <section class="body m-0 d-flex flex-column">
-<div class="body-container p-relative flex-grow1">
-  <dx-tree-list
-    style="min-width: 100%"
-    class="p-absolute disable-drag-last-row checklist-items-tree-list"
-    #treelist
-    id="treelist"
-    name="treelist"
-    [dataSource]="tasks"
-    keyExpr="Task_ID"
-    parentIdExpr="Task_Parent_ID"
-    [(focusedRowKey)]="focusedRowKey"
-    [columnAutoWidth]="false"
-    [wordWrapEnabled]="true"
-    [autoNavigateToFocusedRow]="true"
-    (onFocusedRowChanged)="onFocusedRowChanged($event)"
-    [focusedRowEnabled]="true"
-    [autoExpandAll]="false"
-    [repaintChangesOnly]="false"
-    [showRowLines]="false"
-    [showColumnLines]="false"
-    [renderAsync]="false"
-    [showBorders]="false"
-    [hoverStateEnabled]="true"
-    [allowColumnReordering]="false"
-    [allowColumnResizing]="true"
-    columnResizingMode="widget"
-    (onKeyDown)="onTreeListKeyDown($event)"
-    (onNodesInitialized)="onNodesInitialized($event)"
-    (onRowClick)="onRowClicked($event)"
-    (onRowPrepared)="onRowPrepared($event)"
-    (onCellPrepared)="onCellPrepared($event)"
-    (resized)="onGridResized($event)"
-  >
-    <dxo-column-chooser [enabled]="true" mode="dragAndDrop">
-      <!-- or "select" -->
-    </dxo-column-chooser>
-    <dxo-row-dragging
-      [onDragChange]="onDragChange"
-      [onDragStart]="onDragStart"
-      [allowReordering]="true"
-      [onReorder]="onReorder"
-      [showDragIcons]="true"
-      [allowDropInsideItem]="true"
-      [autoScroll]="true"
-      [dropFeedbackMode]="'indicate'"
-    ></dxo-row-dragging>
-    <dxo-scrolling [useNative]="true" [mode]="'standard'"></dxo-scrolling>
-    <dxo-sorting mode="none"></dxo-sorting>
-    <!-- <dxo-search-panel [visible]="true" width="250"></dxo-search-panel> -->
-    <dxo-header-filter [visible]="false"></dxo-header-filter>
-    <dxo-selection mode="none"></dxo-selection>
-    <!-- <dxo-column-chooser [enabled]="true"></dxo-column-chooser> -->
+    <section class="body-block block-filled">
+      <section class="body m-0 d-flex flex-column">
+        <div class="body-container p-relative flex-grow1">
+          <dx-tree-list
+            style="min-width: 100%"
+            class="p-absolute disable-drag-last-row checklist-items-tree-list"
+            #treelist
+            id="treelist"
+            name="treelist"
+            [dataSource]="tasks"
+            keyExpr="Task_ID"
+            parentIdExpr="Task_Parent_ID"
+            [columnAutoWidth]="false"
+            [wordWrapEnabled]="true"
+            [autoNavigateToFocusedRow]="true"
+            [focusedRowEnabled]="true"
+            [autoExpandAll]="false"
+            [repaintChangesOnly]="false"
+            [showRowLines]="false"
+            [showColumnLines]="false"
+            [renderAsync]="false"
+            [showBorders]="false"
+            [hoverStateEnabled]="true"
+            [allowColumnReordering]="false"
+            [allowColumnResizing]="true"
+            columnResizingMode="widget"
+          >
+            <dxo-column-chooser [enabled]="true" mode="dragAndDrop">
+              <!-- or "select" -->
+            </dxo-column-chooser>
+            <dxo-row-dragging
+              [allowReordering]="true"
+              [onReorder]="onReorder"
+              [showDragIcons]="true"
+              [allowDropInsideItem]="true"
+              [autoScroll]="true"
+              [dropFeedbackMode]="'indicate'"
+            ></dxo-row-dragging>
+            <dxo-scrolling [useNative]="false"></dxo-scrolling>
+            <dxo-sorting mode="none"></dxo-sorting>
+            <!-- <dxo-search-panel [visible]="true" width="250"></dxo-search-panel> -->
+            <dxo-header-filter [visible]="false"></dxo-header-filter>
+            <dxo-selection mode="none"></dxo-selection>
+            <!-- <dxo-column-chooser [enabled]="true"></dxo-column-chooser> -->
 
-    <dxi-column dataField="Task_Subject" [visible]="false"></dxi-column>
-    <dxi-column
-      dataField="Task_Subject"
-      [minWidth]="80"
-      [width]="80"
-      [allowReordering]="false"
-    ></dxi-column>
-    <dxi-column
-      dataField="Task_Assigned_Employee_ID"
-      caption="Assigned"
-      cssClass="employee"
-      cellTemplate="employeeTemplate"
-    >
-      <dxo-lookup
-        [dataSource]="employees"
-        valueExpr="ID"
-        displayExpr="Name"
-      ></dxo-lookup>
-    </dxi-column>
-    <dxi-column
-      dataField="Task_Status"
-      caption="Status"
-      alignment="center"
-      [visible]="false"
-      cellTemplate="descriptionTemplate"
-      [width]="300"
-    >
-      <dxo-lookup [dataSource]="statuses"></dxo-lookup>
-    </dxi-column>
-    <dxi-column
-      dataField="Task_Completion"
-      caption="% Completed"
-      [visible]="false"
-      alignment="center"
-      [customizeText]="getCompletionText"
-    ></dxi-column>
-    <dxi-column dataField="Task_Priority" caption="Priority" [visible]="false">
-      <dxo-lookup
-        [dataSource]="priorities"
-        valueExpr="id"
-        displayExpr="value"
-      ></dxo-lookup>
-    </dxi-column>
-    <dxi-column
-      [minWidth]="200"
-      [width]="200"
-      dataField="Task_Start_Date"
-      caption="Start Date"
-      dataType="date"
-    ></dxi-column>
-    <dxi-column
-      [minWidth]="200"
-      [width]="200"
-      dataField="Task_Due_Date"
-      caption="Due Date"
-      dataType="date"
-    ></dxi-column>
-    <!-- <dxi-column
+            <dxi-column dataField="Task_Subject" [visible]="false"></dxi-column>
+            <dxi-column
+              dataField="Task_Subject"
+              [minWidth]="80"
+              [width]="80"
+              [allowReordering]="false"
+            ></dxi-column>
+            <dxi-column
+              dataField="Task_Assigned_Employee_ID"
+              caption="Assigned"
+              cssClass="employee"
+              cellTemplate="employeeTemplate"
+            >
+              <dxo-lookup
+                [dataSource]="employees"
+                valueExpr="ID"
+                displayExpr="Name"
+              ></dxo-lookup>
+            </dxi-column>
+            <dxi-column
+              dataField="Task_Status"
+              caption="Status"
+              alignment="center"
+              [visible]="false"
+              cellTemplate="descriptionTemplate"
+              [width]="300"
+            >
+              <dxo-lookup [dataSource]="statuses"></dxo-lookup>
+            </dxi-column>
+            <dxi-column
+              dataField="Task_Completion"
+              caption="% Completed"
+              [visible]="false"
+              alignment="center"
+              [customizeText]="getCompletionText"
+            ></dxi-column>
+            <dxi-column
+              dataField="Task_Priority"
+              caption="Priority"
+              [visible]="false"
+            >
+              <dxo-lookup
+                [dataSource]="priorities"
+                valueExpr="id"
+                displayExpr="value"
+              ></dxo-lookup>
+            </dxi-column>
+            <dxi-column
+              [minWidth]="200"
+              [width]="200"
+              dataField="Task_Start_Date"
+              caption="Start Date"
+              dataType="date"
+            ></dxi-column>
+            <dxi-column
+              [minWidth]="200"
+              [width]="200"
+              dataField="Task_Due_Date"
+              caption="Due Date"
+              dataType="date"
+            ></dxi-column>
+            <!-- <dxi-column
       [minWidth]="200"
       [width]="200"
       [allowSorting]="false"
@@ -132,56 +126,61 @@
       [allowGrouping]="false"
       [minWidth]="0"
     ></dxi-column> -->
-    <dxi-column
-      [minWidth]="200"
-      [width]="200"
-      [allowSorting]="false"
-      [allowHeaderFiltering]="false"
-      [allowFiltering]="false"
-      [allowGrouping]="false"
-    ></dxi-column>
-    <dxi-column type="buttons" [width]="100" [minWidth]="100" [fixed]="true">
-      <dxi-button
-        hint="Add child item"
-        icon="add"
-        cssClass="oc-grid-button-add"
-        [visible]="true"
-      ></dxi-button>
-      <dxi-button
-        hint="Edit"
-        icon="edit"
-        cssClass="oc-grid-button-edit"
-        [visible]="true"
-      ></dxi-button>
-      <dxi-button
-        hint="Remove"
-        icon="remove"
-        cssClass="oc-grid-button-remove"
-        [visible]="true"
-      ></dxi-button>
-    </dxi-column>
-    <div *dxTemplate="let options of 'employeeTemplate'">
-      <div
-        class="img"
-        *ngIf="options.data.Task_Assigned_Employee"
-        style.background-image="url('{{
-          options.data.Task_Assigned_Employee.Picture
-        }}')"
-      ></div>
-      <span *ngIf="options.data.Task_Assigned_Employee" class="name">{{
-        options.data.Task_Assigned_Employee.Name
-      }}</span>
-    </div>
-    <div
-      *dxTemplate="let data of 'descriptionTemplate'"
-      [title]="data.value"
-      class="multi-line line-clamp-3"
-    >
-      blablffffffffffffffffffffffffffffffffffffffffa{{ data.value }}
-    </div>
-  </dx-tree-list>
-</div>
-</section>
-</section>
-</section>
+            <dxi-column
+              [minWidth]="200"
+              [width]="200"
+              [allowSorting]="false"
+              [allowHeaderFiltering]="false"
+              [allowFiltering]="false"
+              [allowGrouping]="false"
+            ></dxi-column>
+            <dxi-column
+              type="buttons"
+              [width]="100"
+              [minWidth]="100"
+              [fixed]="true"
+            >
+              <dxi-button
+                hint="Add child item"
+                icon="add"
+                cssClass="oc-grid-button-add"
+                [visible]="true"
+              ></dxi-button>
+              <dxi-button
+                hint="Edit"
+                icon="edit"
+                cssClass="oc-grid-button-edit"
+                [visible]="true"
+              ></dxi-button>
+              <dxi-button
+                hint="Remove"
+                icon="remove"
+                cssClass="oc-grid-button-remove"
+                [visible]="true"
+              ></dxi-button>
+            </dxi-column>
+            <div *dxTemplate="let options of 'employeeTemplate'">
+              <div
+                class="img"
+                *ngIf="options.data.Task_Assigned_Employee"
+                style.background-image="url('{{
+                  options.data.Task_Assigned_Employee.Picture
+                }}')"
+              ></div>
+              <span *ngIf="options.data.Task_Assigned_Employee" class="name">{{
+                options.data.Task_Assigned_Employee.Name
+              }}</span>
+            </div>
+            <div
+              *dxTemplate="let data of 'descriptionTemplate'"
+              [title]="data.value"
+              class="multi-line line-clamp-3"
+            >
+              blablffffffffffffffffffffffffffffffffffffffffa{{ data.value }}
+            </div>
+          </dx-tree-list>
+        </div>
+      </section>
+    </section>
+  </section>
 </section>
