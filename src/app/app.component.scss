@@ -1,0 +1,65 @@
+::ng-deep #tasks {
+  // max-height: 540px;
+}
+
+::ng-deep #tasks .dx-treelist-rowsview td {
+  vertical-align: middle;
+}
+
+::ng-deep .img,
+::ng-deep .name {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+::ng-deep .img {
+  height: 50px;
+  width: 50px;
+  margin-right: 10px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  border-radius: 25px;
+  border: 1px solid lightgray;
+  background-color: #fff;
+}
+.p-absolute {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  bottom: 0px;
+  right: 0px;
+}
+
+::ng-deep
+  .dx-treelist.disable-drag-last-row
+  .dx-treelist-rowsview
+  .dx-data-row {
+  &.checklist-new-item-row {
+    &.dx-state-hover,
+    &.dx-row-focused td {
+      background-color: transparent !important;
+      border-color: transparent !important;
+    }
+
+    .dx-command-drag,
+    .dx-command-edit {
+      cursor: default;
+
+      * {
+        display: none;
+      }
+    }
+  }
+}
+
+.body-container {
+  .description {
+    margin-bottom: 16px * 2;
+    color: var(--fg-color-primary-dark);
+  }
+}
+
+.flex-grow1 {
+  flex-grow: 1;
+}
